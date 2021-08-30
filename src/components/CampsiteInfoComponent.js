@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
+//Presentational Component with 3 functional components//
 
-class CampsiteInfo extends Component {
 
-renderCampsite(campsite){
+function RenderCampsite({campsite}){
     return (
         <div className="col-md-5 m-1">
             <Card>
@@ -18,7 +18,7 @@ renderCampsite(campsite){
     );
 }
 
-renderComments(comments){
+function RenderComments({comments}){
     if (comments){
         return(
             <div className="col-md-5 m-1">
@@ -42,19 +42,18 @@ renderComments(comments){
         return <div/>;
 }
 
-    render() {
-        if (this.props.campsite) {
-            return (
-                <div className = "container">
-                    <div className="row">
-                        {this.renderCampsite(this.props.campsite)}
-                        {this.renderComments(this.props.campsite.comments)}
-                    </div>
+function CampsiteInfo(props) {
+    if (props.campsite) {
+        return (
+            <div className = "container">
+                <div className="row">
+                    <RenderCampsite campsite={props.campsite} />
+                    <RenderComments comments={props.campsite.comments} />
                 </div>
-            );
-        } //Else//
-            return <div/>;
-    }
+            </div>
+        );
+    } //Else//
+        return <div/>;
 }
 
 export default CampsiteInfo;
