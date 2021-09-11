@@ -100,7 +100,7 @@ class Header extends Component {
                             </FormGroup>
                               
                             <FormGroup>
-                                <Label htmlFor="password">Username</Label>
+                                <Label htmlFor="password">Password</Label>
                                 <Input type="text" id="password" name="password" 
                                     innerRef={input => this.password = input}/>
                             </FormGroup>
