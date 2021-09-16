@@ -11,43 +11,69 @@ export const addComment = (campsiteId, rating, author, text) => ({
     }
 });
 
-//action creator: nested arrow function with redux-thunk
-//action creator with redux-thunk --> returns another action
-//function that stimulates a delay in fetching data 
-export const fetchCampsites = () => dispatch => {
 
+//Note: Redux-thunk enables nested arrow function, returns another action
+//Function that stimulates a delay in fetching data 
+export const fetchCampsites = () => dispatch => {
     dispatch(campsitesLoading());
 
-
     return fetch(baseUrl + 'campsites')
-        .then (response => response.json())
-        .then (campsites => dispatch(addCampsites(campsites)));
+        .then(response => {
+            //Determines if returned response is good (sucessful) or bad (error code)
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            //Promise was completely rejected, no response from server. 
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            }
+        )
+        .then(response => response.json())
+        .then(campsites => dispatch(addCampsites(campsites)))
+        .catch(error => dispatch(campsitesFailed(error.message)));
 };
 
-//action creator that dispatches when fetchCampsites dispatches 
-//normal action creator --> returns an object//
 export const campsitesLoading = () => ({
     type: ActionTypes.CAMPSITES_LOADING
 });
 
-//action creator for campsitesFailed, passes errMess (error message) 
-//normal action creator --> returns an object//
+
 export const campsitesFailed = errMess => ({
     type: ActionTypes.CAMPSITES_FAILED,
     payload: errMess
 });
 
-//action creator for addscampsite
-//normal action creator --> returns an object//
+
 export const addCampsites = campsites => ({
     type: ActionTypes.ADD_CAMPSITES,
     payload: campsites
 });
 
-export const fetchComments = () => dispatch => {    
+export const fetchComments = () => dispatch => {
     return fetch(baseUrl + 'comments')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            }
+        )
         .then(response => response.json())
-        .then(comments => dispatch(addComments(comments)));
+        .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
 };
 
 export const commentsFailed = errMess => ({
@@ -64,8 +90,23 @@ export const fetchPromotions = () => dispatch => {
     dispatch(promotionsLoading());
 
     return fetch(baseUrl + 'promotions')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            }
+        )
         .then(response => response.json())
-        .then(promotions => dispatch(addPromotions(promotions)));
+        .then(promotions => dispatch(addPromotions(promotions)))
+        .catch(error => dispatch(promotionsFailed(error.message)));
 };
 
 export const promotionsLoading = () => ({
@@ -80,4 +121,4 @@ export const promotionsFailed = errMess => ({
 export const addPromotions = promotions => ({
     type: ActionTypes.ADD_PROMOTIONS,
     payload: promotions
-});
+}); 
