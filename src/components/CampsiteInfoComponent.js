@@ -35,7 +35,7 @@ class CommentForm extends Component {
     //Receives values from LocalForm and displays as alert & console.log//
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.campsiteId, values.ratings, values.author, values.text);
+        this.props.postComment(this.props.campsiteId, values.ratings, values.author, values.text);
     } 
 
     render() {
@@ -127,7 +127,7 @@ function RenderCampsite({campsite}){
     );
 }
 
-function RenderComments({comments, addComment, campsiteId}){
+function RenderComments({comments, postComment, campsiteId}){
     if (comments){
         return(
             <div className="col-md-5 m-1">
@@ -146,7 +146,7 @@ function RenderComments({comments, addComment, campsiteId}){
                 </div>
 
                 {/*Displays "Submit Comment" button which activates Modal*/}
-                <CommentForm campsiteId={campsiteId} addComment={addComment} />
+                <CommentForm campsiteId={campsiteId} postComment={postComment} />
             </div>
         );   
     } //Else//
@@ -192,7 +192,7 @@ function CampsiteInfo(props) {
                     <RenderCampsite campsite={props.campsite} />
                     <RenderComments comments={props.comments} 
                         comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         campsiteId={props.campsite.id}
                     
                     />
