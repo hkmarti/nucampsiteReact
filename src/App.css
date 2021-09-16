@@ -45,3 +45,27 @@ h2 {
 .navbar-dark {
   background-color: #901CAD;
 }
+
+
+/*Fade-in effect, starts at opacity 0 then goes to 1*/
+/*classNames="page" allows CSS to apply the following classes: 
+.page-enter, .page-enter-active, .page-exit-active to element*/
+/*Slide-in effect = transition. Starts off at -100% to left, then moves to 0%*/
+
+.page-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: 300ms ease-out;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: 300ms ease-in;
+}
+
+/*End fade-in, slide-in block*/
