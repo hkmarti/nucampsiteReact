@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { createForms } from 'react-redux-form';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { CAMPSITES } from '../shared/campsites';
 import { Campsites } from './campsites';
 import { Comments } from './comments';
 import { Partners } from './partners';

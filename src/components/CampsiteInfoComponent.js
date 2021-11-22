@@ -200,11 +200,10 @@ function CampsiteInfo(props) {
                  </div>
                  <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} 
+                    <RenderComments 
                         comments={props.comments}
                         postComment={props.postComment}
                         campsiteId={props.campsite.id}
-                    
                     />
                 </div>
             </div>
